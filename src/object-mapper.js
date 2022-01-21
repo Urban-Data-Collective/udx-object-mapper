@@ -283,6 +283,7 @@ function update_obj(dest, key, data, keys, context)
 // Update the dest[] array with the data on each index
 function update_arr(dest, key, data, keys, context)
 {
+
   // The 'add' instruction is set.  This means to take the data and add it onto a new array node 
   if (key.add) {
     if (data !== null && typeof data !== 'undefined') {
@@ -313,8 +314,20 @@ function update_arr(dest, key, data, keys, context)
   }
 
   // Set the specific array index with the data
-  else 
-    return update_arr_ix(dest, '0', data, keys, context)
+  else {
+    if (Array.isArray(dest) && dest.length){
+      let data_array = new Array(dest.length).fill(data);
+      dest = data_array.reduce(function(dest,d,i) {
+        // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
+        if (key.ix == '' || key.ix == i) {
+          return update_arr_ix(dest, i, applyTransform(d,dest,context), keys.slice(), context)
+        }
+      }, dest)
+  
+      return dest
+
+    } else return update_arr_ix(dest, '0', data, keys, context)
+  }
 }
 
 function applyTransform(data, dest, context){

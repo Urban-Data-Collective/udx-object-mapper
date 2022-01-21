@@ -2259,38 +2259,39 @@ test('Make sure no objects are created without data #48', function (t) {
 //   t.end();
 // });
 
-// test('Including parent items in arrays #50', function (t) {
-//   const src = {
-//     "a": "AA",
-//     "b": "BB",
-//     "array": [
-//         { "x": "one" },
-//         { "x": "two" }
-//     ]
-// };
-//   const map = {
-//     "array[].x": "results[].ex",
-//     "a": "results[].aye",
-//     "b": "results[].bee"
-// }
-//   var expect = {
-//     "results": [
-//         {
-//             "aye": "AA",
-//             "bee": "BB",
-//             "ex": "one"
-//         },
-//         {
-//             "aye": "AA",
-//             "bee": "BB",
-//             "ex": "two"
-//         }
-//     ]
-// };
-//   var result = om(src, map);
-//   t.deepEqual(result, expect);
-//   t.end();
-// });
+test('Including parent items in arrays #50', function (t) {
+  const src = {
+    "a": "AA",
+    "b": "BB",
+    "array": [
+        { "x": "one" },
+        { "x": "two" }
+    ]
+};
+  const map = {
+    "array[].x": "results[].ex",
+    "a": "results[].aye",
+    "b": "results[].bee"
+}
+  var expect = {
+    "results": [
+        {
+            "aye": "AA",
+            "bee": "BB",
+            "ex": "one"
+        },
+        {
+            "aye": "AA",
+            "bee": "BB",
+            "ex": "two"
+        }
+    ]
+};
+  var result = om(src, map);
+  console.log(result)
+  t.deepEqual(result, expect);
+  t.end();
+});
 
 // test('2 array mapping wraps destination in an unwanted array #49', function (t) {
 //   const src = {

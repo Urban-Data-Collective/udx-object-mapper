@@ -12,10 +12,9 @@
   },
   "devDependencies": {
     "debug": "^2.2.0",
-    "tape": "^4.0.1",
-    "perf_hooks": "0.0.1"
+    "perf_hooks": "0.0.1",
+    "tape": "^4.0.1"
   },
-  "optionalDependencies": {},
   "engines": {
     "node": ">=6.0.0"
   },
@@ -37,5 +36,8 @@
     {
       "name": "scotthogan"
     }
-  ]
+  ],
+  "dependencies": {
+    "object-mapper": "^6.2.0"
+  }
 }
