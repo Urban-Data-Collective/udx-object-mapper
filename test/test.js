@@ -1206,7 +1206,7 @@ test('map object to another - with key object notation with transform', function
 });
 
 
-test('map object to another - with two destinations for same value one string and one object', function (t) {
+test.only('map object to another - with two destinations for same value one string and one object', function (t) {
   var baseObject = {
     test: 1
   };
