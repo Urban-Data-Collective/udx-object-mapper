@@ -1206,7 +1206,7 @@ test('map object to another - with key object notation with transform', function
 });
 
 
-test.only('map object to another - with two destinations for same value one string and one object', function (t) {
+test('map object to another - with two destinations for same value one string and one object', function (t) {
   var baseObject = {
     test: 1
   };
@@ -2283,6 +2283,50 @@ test('Including parent items in arrays #50', function (t) {
         {
             "aye": "AA",
             "bee": "BB",
+            "ex": "two"
+        }
+    ]
+};
+  var result = om(src, map);
+  console.log(result)
+  t.deepEqual(result, expect);
+  t.end();
+});
+
+test('Including parent items in arrays #50 - with transform', function (t) {
+  const src = {
+    "a": "AA",
+    "b": "BB",
+    "array": [
+        { "x": "one" },
+        { "x": "two" }
+    ]
+};
+  const map = {
+    "array[].x": "results[].ex",
+    "a": {
+      key: "results[].aye",
+      transform: function (value) {
+        return value + '_A'
+      }
+    },
+    "b": {
+      key: "results[].bee",
+      transform: function (value) {
+        return value + '_B'
+      }
+    }
+}
+  var expect = {
+    "results": [
+        {
+            "aye": "AA_A",
+            "bee": "BB_B",
+            "ex": "one"
+        },
+        {
+            "aye": "AA_A",
+            "bee": "BB_B",
             "ex": "two"
         }
     ]

@@ -311,12 +311,8 @@ function update_arr(dest, key, data, keys, context)
 
     return dest
   }
-
   
   else {
-    console.log(context)
-    console.log(dest)
-    console.log(data)
     if (
       (typeof data === 'string' || data instanceof String) 
       && Array.isArray(dest) 
@@ -325,10 +321,6 @@ function update_arr(dest, key, data, keys, context)
     ){
       let data_array = new Array(dest.length).fill(data);
       dest = data_array.reduce(function(dest,d,i) {
-        console.log('reduce_dest')
-        console.log(dest)
-        console.log(`d=${d}`)
-        console.log(`i=${i}`)
         // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
         if (key.ix == '' || key.ix == i) {
           return update_arr_ix(dest, i, applyTransform(d,dest,context), keys.slice(), context)
