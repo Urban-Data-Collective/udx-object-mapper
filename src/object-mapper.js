@@ -241,6 +241,7 @@ function update(dest, data, keys, context)
     // If there is a key, we need to traverse down to this part of the object
     if (key.name)
       return update_obj(dest, key, data, keys, context)
+      
 
     // If there is an array index, we need to traverse through the array
     if (typeof key.ix !== 'undefined') {
@@ -305,6 +306,7 @@ function update_arr(dest, key, data, keys, context)
     dest = data.reduce(function(dest,d,i) {
       // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
       if (key.ix == '' || key.ix == i) {
+        context.transformed = true
         return update_arr_ix(dest, i, applyTransform(d,dest,context), keys.slice(), context)
       }
     }, dest)
@@ -369,7 +371,7 @@ function set_data(dest, key, data, context)
   }
 
   // If there is a transformation function, call the function.
-  if (typeof context.transform == 'function') {
+  if (typeof context.transform == 'function' && !context.transformed) {
     dest = dest || {}
     data = context.transform(data, context.src, dest, context.srckey, context.destkey)
   }

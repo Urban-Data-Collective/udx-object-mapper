@@ -2733,3 +2733,50 @@ test("issue #71: mapping array should not fail when not defined", t => {
   t.deepEqual(result, expect);
   t.end();
 }); */
+
+test('UDX#1: Do a transform where value is an object from array', function (t) {
+  const src = {
+    "a": "AA",
+    "array": [
+      { 
+        "sub_array": [
+          {"one": 1, "two": 2 },
+          {"one": 1, "two": 2 },
+        ]
+      },
+      { 
+        "sub_array": [
+          {"one": 1, "two": 2 },
+          {"one": 1, "two": 2 },
+        ]
+      }
+    ]
+};
+const map = {
+  'array[].sub_array[0].one': '[].new_one',
+  'array[].sub_array[0].two': '[].new_two',
+  'array[].sub_array[0]': [
+    {
+      key: '[].add',
+      transform: function (value) {
+        return value.one + value.two
+      }
+    },
+  ]
+}
+  var expect = [
+    {
+      "new_one": 1,
+      "new_two": 2,
+      "add": 3
+    },
+    {
+      "new_one": 1,
+      "new_two": 2,
+      "add": 3
+    },
+  ];
+  var result = om(src, map);
+  t.deepEqual(result, expect);
+  t.end();
+});
