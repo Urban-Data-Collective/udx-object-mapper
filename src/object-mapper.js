@@ -341,13 +341,13 @@ function applyTransform(data, dest, context){
 function update_arr_ix(dest, ix, data, keys, context)
 {
   let o
-  if (dest !== null && typeof dest !== 'undefined' && typeof dest[ix] !== 'undefined' )
+  if (dest !== null && typeof dest !== 'undefined' && typeof dest[ix] !== 'undefined')
     o = (keys.length) ? update(dest[ix], data, keys, context) : data
   else
     o = (keys.length) ? update(null, data, keys, context) : data
 
   // Only update (and create if needed) dest if there is data to be saved
-  if (o !== null ) {
+  if (o !== null) {
     dest = dest || []
     dest[ix] = o
   }
