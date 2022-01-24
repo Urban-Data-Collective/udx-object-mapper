@@ -1,12 +1,8 @@
 {
-  "author": "Dan VerWeire <dverweire@gmail.com>",
-  "name": "object-mapper",
+  "author": "Sarah Gallacher <sarah@urbandatacollective.com>",
+  "name": "@urbandatacollective/udx-object-mapper",
   "description": "Copy properties from one object to another.",
   "version": "6.2.0",
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/wankdanker/node-object-mapper.git"
-  },
   "scripts": {
     "test": "node test/test.js"
   },
@@ -40,8 +36,5 @@
       "name": "Sarah Gallacher",
       "email": "sarah@urbandatacollective.com"
     }
-  ],
-  "dependencies": {
-    "object-mapper": "^6.2.0"
-  }
+  ]
 }
