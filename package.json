@@ -16,7 +16,7 @@
     "tape": "^4.0.1"
   },
   "engines": {
-    "node": ">=6.0.0"
+    "node": ">=6.13.0"
   },
   "contributors": [
     {
@@ -35,6 +35,10 @@
     },
     {
       "name": "scotthogan"
+    },
+    {
+      "name": "Sarah Gallacher",
+      "email": "sarah@urbandatacollective.com"
     }
   ],
   "dependencies": {
