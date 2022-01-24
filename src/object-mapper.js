@@ -239,9 +239,8 @@ function update(dest, data, keys, context)
     const key = keys.shift()
 
     // If there is a key, we need to traverse down to this part of the object
-    if (key.name){
+    if (key.name)
       return update_obj(dest, key, data, keys, context)
-    }
       
 
     // If there is an array index, we need to traverse through the array
@@ -276,9 +275,8 @@ function update_obj(dest, key, data, keys, context)
     }
   }
   // This is a leaf.  Set data into the dest
-  else {
+  else
     dest = set_data(dest, key, data, context)
-  }
 
   return dest
 }
