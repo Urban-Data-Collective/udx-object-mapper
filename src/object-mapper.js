@@ -312,9 +312,20 @@ function update_arr(dest, key, data, keys, context)
     return dest
   }
 
-  // Set the specific array index with the data
-  else 
-    return update_arr_ix(dest, '0', data, keys, context)
+  // If the dest is in an array format then add all data elements to each element in dest array
+  if (Array.isArray(dest)){
+    let data_array = new Array(dest.length).fill(data);
+    dest = data_array.reduce(function(dest,d,i) {
+      // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
+      if (key.ix == '' || key.ix == i) {
+        return update_arr_ix(dest, i, d, keys.slice(), context)
+      }
+    }, dest)
+
+    return dest
+
+  } // Set the specific array index with the data
+  else return update_arr_ix(dest, '0', data, keys, context)
 }
 
 function applyTransform(data, dest, context){
