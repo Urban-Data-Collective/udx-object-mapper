@@ -239,8 +239,10 @@ function update(dest, data, keys, context)
     const key = keys.shift()
 
     // If there is a key, we need to traverse down to this part of the object
-    if (key.name)
+    if (key.name){
       return update_obj(dest, key, data, keys, context)
+    }
+      
 
     // If there is an array index, we need to traverse through the array
     if (typeof key.ix !== 'undefined') {
@@ -274,8 +276,9 @@ function update_obj(dest, key, data, keys, context)
     }
   }
   // This is a leaf.  Set data into the dest
-  else
+  else {
     dest = set_data(dest, key, data, context)
+  }
 
   return dest
 }
@@ -305,6 +308,7 @@ function update_arr(dest, key, data, keys, context)
     dest = data.reduce(function(dest,d,i) {
       // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
       if (key.ix == '' || key.ix == i) {
+        context.transformed = true
         return update_arr_ix(dest, i, applyTransform(d,dest,context), keys.slice(), context)
       }
     }, dest)
@@ -339,13 +343,13 @@ function applyTransform(data, dest, context){
 function update_arr_ix(dest, ix, data, keys, context)
 {
   let o
-  if (dest !== null && typeof dest !== 'undefined' && typeof dest[ix] !== 'undefined')
+  if (dest !== null && typeof dest !== 'undefined' && typeof dest[ix] !== 'undefined' )
     o = (keys.length) ? update(dest[ix], data, keys, context) : data
   else
     o = (keys.length) ? update(null, data, keys, context) : data
 
   // Only update (and create if needed) dest if there is data to be saved
-  if (o !== null) {
+  if (o !== null ) {
     dest = dest || []
     dest[ix] = o
   }
@@ -369,7 +373,7 @@ function set_data(dest, key, data, context)
   }
 
   // If there is a transformation function, call the function.
-  if (typeof context.transform == 'function') {
+  if (typeof context.transform == 'function' && !context.transformed) {
     dest = dest || {}
     data = context.transform(data, context.src, dest, context.srckey, context.destkey)
   }
