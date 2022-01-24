@@ -311,39 +311,70 @@ function update_arr(dest, key, data, keys, context)
 
     return dest
   }
-  
-  else {
-    if (
-      (typeof data === 'string' || data instanceof String) 
-      && Array.isArray(dest) 
-      && dest.length 
-      && dest.every((el) => Object.keys(el).length)
-    ){
-      let data_array = new Array(dest.length).fill(data);
-      dest = data_array.reduce(function(dest,d,i) {
-        // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
-        if (key.ix == '' || key.ix == i) {
-          return update_arr_ix(dest, i, applyTransform(d,dest,context), keys.slice(), context)
-        }
-      }, dest)
-  
-      return dest
 
-    } // Set the specific array index with the data
-    else return update_arr_ix(dest, '0', data, keys, context)
-  }
+  if (Array.isArray(dest)){
+    let data_array = new Array(dest.length).fill(data);
+    dest = data_array.reduce(function(dest,d,i) {
+      // If the instruction is to update all array indices ('') or the current index, update the child data element.  Otherwise, don't bother
+      if (key.ix == '' || key.ix == i) {
+        //console.log('calling update_arr_ix')
+        return update_arr_ix(dest, i, d, keys.slice(), context)
+      }
+    }, dest)
+
+    return dest
+
+  } // Set the specific array index with the data
+  else return update_arr_ix(dest, '0', data, keys, context)
 }
 
+/* (typeof data === 'string' || data instanceof String) 
+    && Array.isArray(dest) 
+    && dest.length 
+    && dest.every((el) => Object.keys(el).length) 
+    
+applyTransform(d,dest,context)*/
+
 function applyTransform(data, dest, context){
+  //console.log('applying transform')
+  //console.log(context.transform)
   if (typeof context.transform == 'function') {
+    // console.log(context.transform.toString())
+    // console.log('data')
+    // console.log(data)
+    // console.log('context.src')
+    // console.log(context.src)
+    // console.log('dest')
+    // console.log(dest)
+    // console.log('context.srckey')
+    // console.log(context.srckey)
+    // console.log('context.destkey')
+    // console.log(context.destkey)
+    //const result = context.transform(data, context.src, dest, context.srckey, context.destkey)
+    //console.log('transform result')
+    //console.log(result)
     return context.transform(data, context.src, dest, context.srckey, context.destkey)
   }else{
     return data;
   }
 }
 
+//data, context.src, dest, context.srckey, context.destkey
+//transform(sourceValue, sourceObject, destinationObject, destinationKey);
+
 function update_arr_ix(dest, ix, data, keys, context)
 {
+  /* console.log('ix_dest')
+  console.log(dest)
+  console.log('ix_ix')
+  console.log(ix)
+  console.log('ix_data')
+  console.log(data)
+  console.log('ix_keys')
+  console.log(keys)
+  console.log('ix_context')
+  console.log(context) */
+
   let o
   if (dest !== null && typeof dest !== 'undefined' && typeof dest[ix] !== 'undefined')
     o = (keys.length) ? update(dest[ix], data, keys, context) : data
