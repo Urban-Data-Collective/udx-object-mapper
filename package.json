@@ -2,7 +2,11 @@
   "author": "Sarah Gallacher <sarah@urbandatacollective.com>",
   "name": "@urbandatacollective/udx-object-mapper",
   "description": "Copy properties from one object to another.",
-  "version": "6.2.0",
+  "version": "6.2.1",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Urban-Data-Collective/udx-object-mapper.git"
+  },
   "scripts": {
     "test": "node test/test.js"
   },
